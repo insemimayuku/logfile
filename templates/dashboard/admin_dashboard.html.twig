@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord Admin{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Bienvenue, Admin {{ user.email }} 👨‍💻</h1>
+        <p>Gestion des utilisateurs et des fichiers</p>
+        <a href="{{ path('admin_users') }}" class="btn btn-primary">Gérer les utilisateurs</a>
+        <a href="{{ path('admin_files') }}" class="btn btn-secondary">Voir tous les fichiers</a>
+        <a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a>
+    </div>
+{% endblock %}

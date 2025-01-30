@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Bienvenue, {{ user.email }} 👋</h1>
+        <p>Vous pouvez gérer vos fichiers ici.</p>
+        <a href="{{ path('app_upload') }}" class="btn btn-primary">Uploader un fichier</a>
+        <a href="{{ path('app_files') }}" class="btn btn-secondary">Voir mes fichiers</a>
+        <a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a>
+    </div>
+{% endblock %}

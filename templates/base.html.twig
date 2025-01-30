@@ -13,7 +13,23 @@
         {% endblock %}
     </head>
     <body>
-        {{include("navbar.html.twig")}}
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="{{ path('app_dashboard') }}">Gestion des fichiers</a>
+                <div class="navbar-nav ms-auto">
+                    {% if app.user %}
+                        <a class="nav-link" href="{{ path('app_dashboard') }}">Tableau de bord</a>
+                        <a class="nav-link btn btn-danger text-white" href="{{ path('app_logout') }}">Déconnexion</a>
+                    {% else %}
+                        <a class="nav-link btn btn-primary text-white" href="{{ path('app_login') }}">Connexion</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+
+        {#{{clude("navbar.html.twig")}}#}
         {% block body %}{% endblock %}
     </body>
 </html>
