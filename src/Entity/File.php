@@ -32,6 +32,9 @@ class File
     #[ORM\Column(nullable: true)]
     private ?bool $archiver = null;
 
+    #[ORM\ManyToOne(inversedBy: 'files')]
+    private ?User $id_user = null;
+
     public function __construct()
     {
         $this->setDateUpload(new \DateTimeImmutable());
@@ -111,6 +114,18 @@ class File
     public function setArchiver(?bool $archiver): static
     {
         $this->archiver = $archiver;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?User
+    {
+        return $this->id_user;
+    }
+
+    public function setIdUser(?User $id_user): static
+    {
+        $this->id_user = $id_user;
 
         return $this;
     }
