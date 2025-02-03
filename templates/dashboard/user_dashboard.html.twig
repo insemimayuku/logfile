@@ -1,13 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tableau de bord{% endblock %}
+{% block title %}Tableau de Bord{% endblock %}
 
 {% block body %}
     <div class="container">
         <h1>Bienvenue, {{ user.email }} 👋</h1>
-        <p>Vous pouvez gérer vos fichiers ici.</p>
+        <p>Gérez vos fichiers ici.</p>
+
         <a href="{{ path('app_upload') }}" class="btn btn-primary">Uploader un fichier</a>
         <a href="{{ path('app_files') }}" class="btn btn-secondary">Voir mes fichiers</a>
         <a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a>
+
+        <h2>📂 Mes fichiers</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom du fichier</th>
+                    <th>Date d'upload</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                    <tr>
+                        <td>{{ file.name }}</td>
+                        <td>{{ file.uploadDate|date("d/m/Y H:i") }}</td>
+                        <td>
+                            <a href="{{ path('file_download', {id: file.id}) }}" class="btn btn-sm btn-success">Télécharger</a>
+                            <a href="{{ path('file_delete', {id: file.id}) }}" class="btn btn-sm btn-danger">Supprimer</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="3">Aucun fichier trouvé.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

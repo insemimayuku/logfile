@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\FileRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FileRepository::class)]
@@ -17,27 +16,18 @@ class File
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::BIGINT)]
-    private ?string $size = null;
-
-    #[ORM\Column(length: 50)]
-    private ?string $format = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $date_upload = null;
-
     #[ORM\Column(length: 255)]
     private ?string $path = null;
 
-    #[ORM\ManyToOne(inversedBy: 'file_id')]
-    private ?User $user_id = null;
+    #[ORM\Column]
+    private ?int $size = null;
 
-    #[ORM\Column(type: 'string', length: 50, options: ['default' => 'isactive'])]
-    private ?string $statut = 'isactive';
+    #[ORM\Column(type: "datetime")]
+    private ?\DateTimeInterface $uploadDate = null;
 
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'files')]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -49,46 +39,9 @@ class File
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getSize(): ?string
-    {
-        return $this->size;
-    }
-
-    public function setSize(string $size): static
-    {
-        $this->size = $size;
-
-        return $this;
-    }
-
-    public function getFormat(): ?string
-    {
-        return $this->format;
-    }
-
-    public function setFormat(string $format): static
-    {
-        $this->format = $format;
-
-        return $this;
-    }
-
-    public function getDateUpload(): ?\DateTimeImmutable
-    {
-        return $this->date_upload;
-    }
-
-    public function setDateUpload(\DateTimeImmutable $date_upload): static
-    {
-        $this->date_upload = $date_upload;
-
         return $this;
     }
 
@@ -97,46 +50,42 @@ class File
         return $this->path;
     }
 
-    public function setPath(string $path): static
+    public function setPath(string $path): self
     {
         $this->path = $path;
-
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getSize(): ?int
     {
-        return $this->user_id;
+        return $this->size;
     }
 
-    public function setUserId(?User $user_id): static
+    public function setSize(int $size): self
     {
-        $this->user_id = $user_id;
-
+        $this->size = $size;
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getUploadDate(): ?\DateTimeInterface
     {
-        return $this->status;
+        return $this->uploadDate;
     }
 
-    public function setStatus(string $status): self
+    public function setUploadDate(\DateTimeInterface $uploadDate): self
     {
-        $this->status = $status;
-
+        $this->uploadDate = $uploadDate;
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getUser(): ?User
     {
-        return $this->description;
+        return $this->user;
     }
 
-    public function setDescription(string $description): static
+    public function setUser(?User $user): self
     {
-        $this->description = $description;
-
+        $this->user = $user;
         return $this;
     }
 }
