@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\File;
+use App\Entity\User;
 use App\Form\FileType;
+use App\Repository\FileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -14,10 +16,12 @@ use Symfony\Component\Routing\Attribute\Route;
 class FileController extends AbstractController
 {
     #[Route('/', name: 'app_file')]
-    public function index(): Response
-    {
+    public function index(FileRepository $fileR, Security $security): Response
+    {   $files = $fileR->findBy(['id_user'=>$security->getUser()]);
+
         return $this->render('file/index.html.twig', [
             'controller_name' => 'FileController',
+            'files' => $files
         ]);
     }
 

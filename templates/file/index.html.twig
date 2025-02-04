@@ -17,4 +17,17 @@
         <li>Your template at <code>C:/Users/tsiba/Documents/dev/repository/logfile/logfile/templates/file/index.html.twig</code></li>
     </ul>
 </div>
+<div>
+    {% if files is empty %}
+        <p>Aucun livre trouvé.</p>
+    {% else %}
+        <ul>
+            {% for file in files %}
+                <li>{{ file.thumdnail }}</li>
+
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+</div>
 {% endblock %}
