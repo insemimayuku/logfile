@@ -24,11 +24,15 @@ class StorageCorps
     private ?float $sizeUse = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateCreated = null;
+    private ?\DateTimeImmutable $dateCreated = null;
 
     #[ORM\Column(length: 64)]
     private ?string $path = null;
 
+    public function __construct()
+    {
+        $this->setDateCreated(new \DateTimeImmutable());
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -70,12 +74,12 @@ class StorageCorps
         return $this;
     }
 
-    public function getDateCreated(): ?\DateTimeInterface
+    public function getDateCreated(): ?\DateTimeImmutable
     {
         return $this->dateCreated;
     }
 
-    public function setDateCreated(\DateTimeInterface $dateCreated): static
+    public function setDateCreated(\DateTimeImmutable $dateCreated): static
     {
         $this->dateCreated = $dateCreated;
 
