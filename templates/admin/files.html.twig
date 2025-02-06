@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Gestion des fichiers</h1>
+    <table>
+        <tr>
+            <th>Nom du fichier</th>
+            <th>Utilisateur</th>
+            <th>Date d'upload</th>
+        </tr>
+        {% for file in files %}
+            <tr>
+                <td>{{ file.name }}</td>
+                <td>{{ file.user.email }}</td>
+                <td>{{ file.uploadDate|date('d/m/Y H:i') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
