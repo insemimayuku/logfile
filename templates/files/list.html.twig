@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes fichiers{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>📂 Mes fichiers</h1>
+        <a href="{{ path('app_upload') }}" class="btn btn-success mb-3">Uploader un fichier</a>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Aperçu</th>
+                    <th>Date d'upload</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                    <tr>
+                        <td>{{ file.name }}</td>
+                        <td>
+                            {% if file.path matches '/\.(jpg|jpeg|png|gif)$/i' %}
+                                <img src="{{ asset('uploads/' ~ file.path) }}" alt="{{ file.name }}" width="50">
+                            {% else %}
+                                📄
+                            {% endif %}
+                        </td>
+                        <td>{{ file.uploadDate|date('d/m/Y H:i') }}</td>
+                        <td>
+                            <a href="{{ asset('uploads/' ~ file.path) }}" class="btn btn-primary btn-sm" target="_blank">Voir</a>
+                            <form method="post" action="{{ path('file_delete', {id: file.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce fichier ?');" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="4">Aucun fichier trouvé.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

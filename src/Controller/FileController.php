@@ -17,6 +17,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class FileController extends AbstractController
 {
     #[Route('/upload', name: 'app_upload')]
+    #[IsGranted('ROLE_USER')]
     public function upload(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(FileUploadType::class);
@@ -45,7 +46,8 @@ class FileController extends AbstractController
                 $entityManager->persist($file);
                 $entityManager->flush();
 
-                return $this->redirectToRoute('app_dashboard');
+                $this->addFlash('success', 'Fichier uploadé avec succès.');
+                return $this->redirectToRoute('app_files');
             }
         }
 
@@ -54,17 +56,26 @@ class FileController extends AbstractController
         ]);
     }
 
-    #[Route('/delete/{id}', name: 'file_delete')]
+    #[Route('/', name: 'app_files')]
+    #[IsGranted('ROLE_USER')]
+    public function listFiles(EntityManagerInterface $entityManager): Response
+    {
+        $files = $entityManager->getRepository(File::class)->findBy(['user' => $this->getUser()]);
+
+        return $this->render('files/list.html.twig', [
+            'files' => $files,
+        ]);
+    }
+
+    #[Route('/delete/{id}', name: 'file_delete', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
     public function delete(File $file, EntityManagerInterface $entityManager): Response
     {
-        // Vérification si l'utilisateur est le propriétaire du fichier
         if ($this->getUser() !== $file->getUser()) {
             throw $this->createAccessDeniedException('Vous ne pouvez pas supprimer ce fichier.');
         }
 
         $filePath = $this->getParameter('uploads_directory') . '/' . $file->getPath();
-
         if (file_exists($filePath)) {
             unlink($filePath);
         }
@@ -72,7 +83,7 @@ class FileController extends AbstractController
         $entityManager->remove($file);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_dashboard');
+        $this->addFlash('success', 'Fichier supprimé avec succès.');
+        return $this->redirectToRoute('app_files');
     }
-
 }

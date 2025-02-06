@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container">
-        <h1>Bienvenue, {{ user.email }} 👋</h1>
+        <h1>Bienvenue {{ user.firstName }} {{ user.lastName }} 👋</h1>
         <p>Gérez vos fichiers ici.</p>
 
         <a href="{{ path('app_upload') }}" class="btn btn-primary">Uploader un fichier</a>
