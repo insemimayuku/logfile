@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container">
         {% if app.user %}
-            <h1 class="text-center">Vous êtes déjà connecté ✅</h1>
+            <h1 class="text-center">Bonjour, Vous êtes connecté ✅</h1>
             <div class="text-center">
                 <a href="{{ path('app_dashboard') }}" class="btn btn-primary">Aller au tableau de bord</a>
                 <a href="{{ path('app_logout') }}" class="btn btn-danger">Se déconnecter</a>

@@ -16,13 +16,14 @@
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="{{ path('app_dashboard') }}">Gestion de Fichiers</a>
+                <a class="navbar-brand" href="#">LogFile</a>
                 <div class="navbar-nav ms-auto">
                     {% if app.user %}
                         {% if is_granted('ROLE_ADMIN') %}
                             <a class="nav-link" href="{{ path('admin_dashboard') }}">Admin Dashboard</a>
                         {% else %}
-                            <a class="nav-link" href="{{ path('app_dashboard') }}">Mon Dashboard</a>
+                            <a class="nav-link" href="{{ path('app_dashboard') }}">Mon Tableau de bord</a>
+                            <a class="nav-link" href="{{ path('user_settings') }}">⚙️ Paramètres</a>
                         {% endif %}
                         <a class="nav-link btn btn-danger text-white" href="{{ path('app_logout') }}">Déconnexion</a>
                     {% else %}
@@ -33,7 +34,6 @@
         </nav>
 
 
-        {#{{clude("navbar.html.twig")}}#}
         {% block body %}{% endblock %}
     </body>
 </html>
