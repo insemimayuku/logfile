@@ -36,6 +36,7 @@ class StorageCorpsController extends AbstractController
         }
 
         return $this->render('storage_corps/new.html.twig',[
+            'user' =>($security->getUser())? $security->getUser()->getUserIdentifier(): 'no user connecte',
             'formulaire' => $form,
         ]);
     }
