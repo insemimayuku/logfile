@@ -29,7 +29,7 @@ class StorageCorpsController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $storage->setSizeAllow(100.00);
+            $storage->setSizeAllow(20.00);
             $storage->setSizeUse(00.00);
             $mg->persist($storage);
             $mg->flush();

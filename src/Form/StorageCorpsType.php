@@ -16,7 +16,7 @@ class StorageCorpsType extends AbstractType
         $builder
             ->add('name')
             ->add('sizeAllow', NumberType::class,[
-                'data' => 60.00,
+                'data' => 20.00,
             'disabled' => true
             ])
             ->add('path')
