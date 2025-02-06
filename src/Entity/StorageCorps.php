@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StorageCorpsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,14 +26,21 @@ class StorageCorps
     private ?float $sizeUse = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeImmutable $dateCreated = null;
+    private ?\DateTime $dateCreated = null;
 
     #[ORM\Column(length: 64)]
     private ?string $path = null;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'storage')]
+    private Collection $users;
+
     public function __construct()
     {
-        $this->setDateCreated(new \DateTimeImmutable());
+        $this->setDateCreated(new \DateTime());
+        $this->users = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -74,12 +83,12 @@ class StorageCorps
         return $this;
     }
 
-    public function getDateCreated(): ?\DateTimeImmutable
+    public function getDateCreated(): ?\DateTime
     {
         return $this->dateCreated;
     }
 
-    public function setDateCreated(\DateTimeImmutable $dateCreated): static
+    public function setDateCreated(\DateTime $dateCreated): static
     {
         $this->dateCreated = $dateCreated;
 
@@ -94,6 +103,36 @@ class StorageCorps
     public function setPath(string $path): static
     {
         $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setStorage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getStorage() === $this) {
+                $user->setStorage(null);
+            }
+        }
 
         return $this;
     }

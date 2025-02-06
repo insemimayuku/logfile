@@ -6,6 +6,8 @@ use App\Entity\File;
 use App\Entity\User;
 use App\Form\FileType;
 use App\Repository\FileRepository;
+use App\Repository\StorageCorpsRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -31,6 +33,9 @@ class FileController extends AbstractController
         $form = $this->createForm(FileType::class, $file);
         $user=$security->getUser();
 
+        $store = $security->getUser()->getStorage()->getPath();
+        
+
         $form->handleRequest($req);
 
         if ($form->isSubmitted() && $form->isValid() ) {
@@ -40,15 +45,19 @@ class FileController extends AbstractController
 
             if ($file && $user) {
                 $file->setThumdnail($filer->getClientOriginalName());
-                $file->setPath('/files/' . $filer->getClientOriginalName());
+                $file->setPath('/'. $store.'/' . $filer->getClientOriginalName());
                 $file->setSize(round($filer->getSize() / 1024, 2));
                 $file->setExtension($filer->guessExtension());
                 $file->setIdUser($user);
                 
 
-                $filer->move($this->getParameter('kernel.project_dir') . '/public/files', $filer->getClientOriginalName());
+                $filer->move($this->getParameter('kernel.project_dir') . '/public/'.$store, $filer->getClientOriginalName());
 
                 $mg->persist($file);
+
+
+
+
                 $mg->flush();
             }       
              else{

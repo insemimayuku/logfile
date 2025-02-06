@@ -42,6 +42,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: File::class, mappedBy: 'id_user')]
     private Collection $files;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?StorageCorps $storage = null;
+
     public function __construct()
     {
         $this->files = new ArrayCollection();
@@ -148,6 +151,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $file->setIdUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStorage(): ?StorageCorps
+    {
+        return $this->storage;
+    }
+
+    public function setStorage(?StorageCorps $storage): static
+    {
+        $this->storage = $storage;
 
         return $this;
     }
