@@ -16,6 +16,22 @@ class FileRepository extends ServiceEntityRepository
         parent::__construct($registry, File::class);
     }
 
+    public function getTotalSizeAllStorage(){
+
+        $resultat= $this->createQueryBuilder('f') // 'f' = alias pour File
+        ->select('SUM(f.size) as sizeUse, stk.sizeAllow, stk.name
+        ')
+            ->join('f.id_user', 'u')   // Jointure avec User (alias 'u')
+            ->join('u.storage', 'stk') // Jointure avec StorageCorps (alias 'stk')
+            ->groupBy('stk.id')        // Regrouper par stockage
+            ->getQuery()
+            ->getResult();
+        
+        return array_map(function ($row) {
+            $row['sizeUse'] = round($row['sizeUse'], 2);
+            return $row;
+        }, $resultat);
+    }
     
 
     //    /**

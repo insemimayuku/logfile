@@ -21,6 +21,9 @@ class AdminController extends AbstractController
     #[Route('/dashboard', name: 'admin_dashboard')]
     public function index(EntityManagerInterface $entityManager): Response
     {
+        
+
+        
         $userCount = $entityManager->getRepository(User::class)->count([]);
         $fileCount = $entityManager->getRepository(File::class)->count([]);
 

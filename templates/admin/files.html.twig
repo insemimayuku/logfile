@@ -2,21 +2,28 @@
 
 {% block body %}
     <h1>Gestion des fichiers</h1>
-    <table>
-        <tr>
-            <th>Nom du fichier</th>
-            <th>Utilisateur</th>
-            <th>Stokage</th>
-            <th>Date d'upload</th>
-        </tr>
+<table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th scope="col">Nom du fichier</th>
+                <th scope="col">Utilisateur</th>
+                <th scope="col">Stokage</th>
+                <th scope="col">Date d'upload</th>
+            </tr>
+
+        </thead>
+
         {% for file in files %}
+        <tbody>
             <tr>
                 <td>{{ file.thumdnail }}</td>
                 <td>{{ file.idUser.email }}</td>
                 <td>{{ file.idUser.storage.name }}</td>
-                <td>{{ file.idUser.storage.sizeUse }}/{{ file.idUser.storage.sizeAllow }}</td>
                 <td>{{ file.dateUpload | date('d M Y') }}</td>
             </tr>
+        
+        </tbody>
         {% endfor %}
     </table>
 {% endblock %}

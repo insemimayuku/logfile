@@ -2,21 +2,24 @@
 
 {% block body %}
     <h1>Gestion des utilisateurs</h1>
-    <table>
+    <table class="table table-striped container-md ">
         <tr>
-            <th>Email</th>
-            <th>Rôles</th>
-            <th>Actions</th>
+            <th scope="col">Email</th>
+            <th scope="col">Rôles</th>
+            <th scope="col">Actions</th>
         </tr>
         {% for user in users %}
             <tr>
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles|join(', ') }}</td>
                 <td>
-                    <a href="{{ path('admin_edit_user', {id: user.id}) }}">Modifier</a>
-                    <form method="post" action="{{ path('admin_delete_user', {id: user.id}) }}" style="display:inline;">
-                        <button type="submit" onclick="return confirm('Supprimer cet utilisateur ?');">❌ Supprimer</button>
-                    </form>
+                    <div class="btn-group" role="group">
+                        <a type="button" class="btn btn-warning" href="{{ path('admin_edit_user', {id: user.id}) }}">Modifier</a>
+                        <form method="post" action="{{ path('admin_delete_user', {id: user.id}) }}" style="display:inline;">
+                            <button type="button" class="btn btn-danger" type="submit" onclick="return confirm('Supprimer cet utilisateur ?');">❌ Supprimer</button>
+                        </form>
+                    </div>
+
                 </td>
             </tr>
         {% endfor %}

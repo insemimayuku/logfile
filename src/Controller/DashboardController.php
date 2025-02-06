@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+
 class DashboardController extends AbstractController
 {
     #[Route('/dashboard', name: 'app_dashboard')]
@@ -34,14 +35,18 @@ class DashboardController extends AbstractController
 
     #[Route('/admin/dashboard', name: 'admin_dashboard')]
     #[IsGranted('ROLE_ADMIN')]
-    public function adminDashboard(EntityManagerInterface $entityManager): Response
+    public function adminDashboard(EntityManagerInterface $entityManager,FileRepository $fileR): Response
     {
+        $stores= $fileR->getTotalSizeAllStorage();
         $userCount = $entityManager->getRepository(User::class)->count([]);
         $fileCount = $entityManager->getRepository(File::class)->count([]);
+
+            
 
         return $this->render('dashboard/admin_dashboard.html.twig', [
             'userCount' => $userCount,
             'fileCount' => $fileCount,
+            'Stores' => $stores,
         ]);
     }
 }
