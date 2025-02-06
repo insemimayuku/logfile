@@ -45,13 +45,13 @@ class FileController extends AbstractController
 
             if ($file && $user) {
                 $file->setThumdnail($filer->getClientOriginalName());
-                $file->setPath('/'. $store.'/' . $filer->getClientOriginalName());
+                $file->setPath('/STORE/'. $store.'/' . $filer->getClientOriginalName());
                 $file->setSize(round($filer->getSize() / 1024, 2));
                 $file->setExtension($filer->guessExtension());
                 $file->setIdUser($user);
                 
 
-                $filer->move($this->getParameter('kernel.project_dir') . '/public/'.$store, $filer->getClientOriginalName());
+                $filer->move($this->getParameter('kernel.project_dir') . '/public/STORE/'.$store, $filer->getClientOriginalName());
 
                 $mg->persist($file);
 
