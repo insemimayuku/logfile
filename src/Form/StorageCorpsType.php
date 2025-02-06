@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\StorageCorps;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +20,7 @@ class StorageCorpsType extends AbstractType
                 'data' => 20.00,
             'disabled' => true
             ])
-            ->add('path')
+            ->add('path' ,HiddenType::class)
             ->add('submit',SubmitType::class, [
                 'label' => 'créer'
             ])

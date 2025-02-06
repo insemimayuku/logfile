@@ -7,8 +7,8 @@
         <h1>Bienvenue {{ user.firstName }} {{ user.lastName }} 👋</h1>
         <p>Gérez vos fichiers ici.</p>
 
-        <a href="{{ path('app_upload') }}" class="btn btn-primary">Uploader un fichier</a>
-        <a href="{{ path('app_files') }}" class="btn btn-secondary">Voir mes fichiers</a>
+        <a href="{{ path('formulaire') }}" class="btn btn-primary">Uploader un fichier</a>
+        {# <a href="{{ path('app_files') }}" class="btn btn-secondary">Voir mes fichiers</a> #}
         {#<a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a>#}
 
         <h2>📂 Mes fichiers</h2>
@@ -23,11 +23,12 @@
             <tbody>
                 {% for file in files %}
                     <tr>
-                        <td>{{ file.name }}</td>
-                        <td>{{ file.uploadDate|date("d/m/Y H:i") }}</td>
+                        <td>{{ file.thumdnail }}</td>
+                        <td>{{ file.dateUpload | date("d M Y") }}</td>
+
                         <td>
-                            <a href="{{ path('file_download', {id: file.id}) }}" class="btn btn-sm btn-success">Télécharger</a>
-                            <a href="{{ path('file_delete', {id: file.id}) }}" class="btn btn-sm btn-danger">Supprimer</a>
+                            <a href="{{ path('dowloader', {id: file.id}) }}" class="btn btn-sm btn-success">Télécharger</a>
+                            <a href="{{ path('fileArchive', {id: file.id}) }}" class="btn btn-sm btn-danger">Archiver</a>
                         </td>
                     </tr>
                 {% else %}

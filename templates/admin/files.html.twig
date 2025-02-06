@@ -6,13 +6,16 @@
         <tr>
             <th>Nom du fichier</th>
             <th>Utilisateur</th>
+            <th>Stokage</th>
             <th>Date d'upload</th>
         </tr>
         {% for file in files %}
             <tr>
-                <td>{{ file.name }}</td>
-                <td>{{ file.user.email }}</td>
-                <td>{{ file.uploadDate|date('d/m/Y H:i') }}</td>
+                <td>{{ file.thumdnail }}</td>
+                <td>{{ file.idUser.email }}</td>
+                <td>{{ file.idUser.storage.name }}</td>
+                <td>{{ file.idUser.storage.sizeUse }}/{{ file.idUser.storage.sizeAllow }}</td>
+                <td>{{ file.dateUpload | date('d M Y') }}</td>
             </tr>
         {% endfor %}
     </table>

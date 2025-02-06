@@ -30,7 +30,7 @@ class File
     private ?string $extension = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $archiver = null;
+    private ?bool $archiver = false;
 
     #[ORM\ManyToOne(inversedBy: 'files')]
     private ?User $id_user = null;

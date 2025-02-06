@@ -22,7 +22,9 @@ class StorageCorpsController extends AbstractController
     }
     #[Route('/form-storage','makeStorage',methods: ['GET','POST'])]
     public function new(Request $req, EntityManagerInterface $mg,Security $security):Response{
+        $user = $security->getUser();
         $storage = new StorageCorps();
+        $storePath = bin2hex(random_bytes(3));
         $form = $this->createForm(StorageCorpsType::class, $storage);
 
         $form->handleRequest($req);
@@ -31,8 +33,14 @@ class StorageCorpsController extends AbstractController
             
             $storage->setSizeAllow(20.00);
             $storage->setSizeUse(00.00);
+            $storage->setPath($storePath);
             $mg->persist($storage);
             $mg->flush();
+
+            $user->setStorage($storage);
+            $mg->persist($user);
+            $mg->flush();
+
         }
 
         return $this->render('storage_corps/new.html.twig',[

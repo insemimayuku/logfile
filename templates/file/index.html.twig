@@ -23,7 +23,7 @@
     {% else %}
         <ul>
             {% for file in files %}
-                <li>{{ file.thumdnail }}</li>
+                <li>{{ file.thumdnail }} {{file.size}}</li>
 
             {% endfor %}
         </ul>

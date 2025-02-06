@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\File;
+use App\Repository\FileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class DashboardController extends AbstractController
 {
     #[Route('/dashboard', name: 'app_dashboard')]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager,FileRepository $fileR): Response
     {
         $user = $this->getUser();
 
@@ -23,7 +24,7 @@ class DashboardController extends AbstractController
         }
 
         // Récupérer les fichiers de l'utilisateur
-        $files = $entityManager->getRepository(File::class)->findBy(['user' => $user]);
+        $files = $fileR->findBy(['id_user'=> $user, 'archiver'=>0]);
 
         return $this->render('dashboard/user_dashboard.html.twig', [
             'user' => $user,

@@ -17,9 +17,11 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class FileController extends AbstractController
 {
-    #[Route('/', name: 'app_file')]
+    #[Route('/', name: 'admin_all_files')]
     public function index(FileRepository $fileR, Security $security): Response
-    {   $files = $fileR->findBy(['id_user'=>$security->getUser()]);
+    {   $files = $fileR->findAll();
+
+        
 
         return $this->render('file/index.html.twig', [
             'controller_name' => 'FileController',
@@ -51,7 +53,7 @@ class FileController extends AbstractController
                 $file->setIdUser($user);
                 
 
-                $filer->move($this->getParameter('kernel.project_dir') . '/public/STORE/'.$store, $filer->getClientOriginalName());
+                $filer->move($this->getParameter('kernel.project_dir') . '/STORE/'.$store, $filer->getClientOriginalName());
 
                 $mg->persist($file);
 
@@ -71,4 +73,26 @@ class FileController extends AbstractController
             'formulaire' => $form
         ]);
     }
+    
+    #[Route(path: '/archive/{id}', name: 'fileArchive', methods: ['GET','POST'])]
+    public function archive(int $id, FileRepository $fileR, EntityManagerInterface $mg, Security $security):Response{
+        $file = $fileR->find($id);
+        
+        if ($security->getUser() && !empty($id) && $id>=0 && $file) {
+            $file->setArchiver(true);
+
+            $mg->flush();
+        }
+
+
+        return $this->redirectToRoute('app_dashboard');
+    }
+
+    #[Route(path: '/dowload/{id}', name: 'dowloader')]
+    public function dowloaderFile(int $id,Security $security, FileRepository $fileR):Response{
+        $file =$fileR->findOneBy(['id'=>$id]);
+
+        $filePath  = $this->getParameter('kernel.project_dir').$file->getPath();
+   return $this->file($filePath);
+}
 }

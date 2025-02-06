@@ -1,0 +1,26 @@
+>Hypertext Preprocessor actuel
+>PHP s'appelait alors PHP/FI (pour Personal Home Page Tools/Form Interpreter)
+>langage PHP a été créé en 1994 par Rasmus Lerdorf pour son site web.
+
+> C'était à l'origine une bibliothèque logicielle en C12
+En 1997, deux étudiants, Andi Gutmans et Zeev Suraski, ont redéveloppé le cœur de PHP/FI. Ce travail a abouti un an plus tard à la version 3 de PHP
+>implémentations Zend Engine
+
+MySQL 2001, Mariadb 2009 cocréateur Michael Widenius
+
+Js:
+créé en 1995 par Brendan Eich
+Date de première version Mai 1996
+Le premier moteur JavaScript, SpiderMonkey
+
+Ts:
+TypeScript a été cocréé par Anders Hejlsberg, principal inventeur de C#
+Date de première version 9 février 2012
+
+Html:
+En août 1991 création tim Berners-Lee.
+Moteur: Webkit, Blink, Gecko
+
+Css:
+En 1994 creation Wium Lie
+Version initiale 1996

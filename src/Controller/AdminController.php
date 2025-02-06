@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\File;
 use App\Form\UserRoleType;
+use App\Repository\FileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -67,9 +69,9 @@ class AdminController extends AbstractController
     }
 
     #[Route('/files', name: 'admin_files')]
-    public function listFiles(EntityManagerInterface $entityManager): Response
+    public function listFiles(FileRepository $fileR, Security $security,EntityManagerInterface $entityManager): Response
     {
-        $files = $entityManager->getRepository(File::class)->findAll();
+        $files =$fileR->findAll() ;
 
         return $this->render('admin/files.html.twig', [
             'files' => $files,
