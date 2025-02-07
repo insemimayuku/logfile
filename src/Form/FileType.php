@@ -22,7 +22,14 @@ class FileType extends AbstractType
                 'constraints' =>[
                 new FileContrain([
                     'maxSize' => '1024k',
-                    
+                            'mimeTypes' => [
+                                'image/jpeg',
+                                'image/png',
+                                'image/gif',
+                                'text/plain',
+                            ],
+                            'mimeTypesMessage' => 'Seuls les fichiers texte (.txt) et les images (.jpg, .jpeg, .png, .gif) sont autorisés.',
+            
                     ]
                 )]
 

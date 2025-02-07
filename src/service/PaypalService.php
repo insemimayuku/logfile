@@ -11,16 +11,24 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
-use PhpParser\Node\Stmt\Return_;
 
-Class PaypalService{
+class PaypalService{
     private $apiContext;
 
-    public function __construct(String $clientID, String $secret){
+    public function __construct(String $clientID, String $secret, $mode){
         $this->apiContext = new ApiContext(new OAuthTokenCredential($clientID,$secret));
-        $this->apiContext->setConfig([
-            'mode' => 'sandbox',
+        $this->apiContext->setConfig(['mode' => $mode,  // 'sandbox' ou 'live'
+            'http.ConnectionTimeOut' => 30,
+            'log.LogEnabled' => true,
+            'log.FileName' => '../var/logs/paypal.log',
+            'log.LogLevel' => 'DEBUG'
         ]);
+    }
+
+
+    public function getApiContext(): ApiContext
+    {
+        return $this->apiContext;
     }
 
     public function createPayment(float $totalAmount, string $returnUrl, string $cancelUrl){
