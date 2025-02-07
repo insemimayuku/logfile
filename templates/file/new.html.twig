@@ -1,10 +1,15 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <div>{{ 'hello form'}}</div>
 
-    <div>
+<div class="container w-50 my-5">
+
         {{ form(formulaire)}}
-	</div>
+	
+    <a type="button" class="btn btn-primary" href="{{ path('app_dashboard') }}">Retour</a>
+    </div>
+
+
+
 
 {% endblock %}

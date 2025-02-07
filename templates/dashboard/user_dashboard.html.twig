@@ -5,11 +5,27 @@
 {% block body %}
     <div class="container">
         <h1>Bienvenue {{ user.firstName }} {{ user.lastName }} 👋</h1>
-        <p>Gérez vos fichiers ici.</p>
 
-        <a href="{{ path('formulaire') }}" class="btn btn-primary">Uploader un fichier</a>
-        {# <a href="{{ path('app_files') }}" class="btn btn-secondary">Voir mes fichiers</a> #}
-        {#<a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a>#}
+        <div>
+            <p>Gérez vos fichiers ici.</p>
+
+            <a href="{{ path('formulaire') }}" class="btn btn-primary">Uploader un fichier</a>
+            {# <a href="{{ path('app_files') }}" class="btn btn-secondary">Voir mes fichiers</a> #}
+            {#<a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a>#}
+
+            <div class="d-flex flex-column align-items-end">
+
+                <p>{{stokage}} :Stockage</p>
+                <span>{{percent}} %</span>
+
+                <div class="progress w-25">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{percent}}%" aria-valuenow="{{percent}}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+              
+        </div>
+
+
 
         <h2>📂 Mes fichiers</h2>
         <table class="table table-striped">

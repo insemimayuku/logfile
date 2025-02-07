@@ -19,18 +19,17 @@ class FileController extends AbstractController
 {
     #[Route('/', name: 'admin_all_files')]
     public function index(FileRepository $fileR, Security $security): Response
-    {   $files = $fileR->findAll();
+    {   
 
         
 
         return $this->render('file/index.html.twig', [
             'controller_name' => 'FileController',
-            'files' => $files
         ]);
     }
 
     #[Route('/form', name:'formulaire', methods:['GET','POST'])]
-    public function new(Request $req, EntityManagerInterface $mg, Security $security):Response{
+    public function new(Request $req, EntityManagerInterface $mg, Security $security,FileRepository $fileR):Response{
         $file = new File();
         $form = $this->createForm(FileType::class, $file);
         $user=$security->getUser();
@@ -57,10 +56,10 @@ class FileController extends AbstractController
 
                 $mg->persist($file);
 
-
-
-
                 $mg->flush();
+
+                $fileR->updateStorageSizeUse($user->getId());
+                
             }       
              else{
             return $this->redirectToRoute('app_login');
@@ -82,6 +81,8 @@ class FileController extends AbstractController
             $file->setArchiver(true);
 
             $mg->flush();
+
+            $fileR->updateStorageSizeUse($security->getUser()->getId());
         }
 
 

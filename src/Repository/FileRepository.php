@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\File;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\SecurityBundle\Security;
 
 /**
  * @extends ServiceEntityRepository<File>
@@ -31,6 +34,30 @@ class FileRepository extends ServiceEntityRepository
             $row['sizeUse'] = round($row['sizeUse'], 2);
             return $row;
         }, $resultat);
+    }
+
+
+    public function updateStorageSizeUse(int $userId) {
+        
+        $qb = $this->createQueryBuilder('f')
+            ->select('SUM(f.size) as totalSize')
+            ->where('f.id_user = :userId')
+            ->andWhere('f.archiver != 1')
+            ->setParameter('userId', $userId)
+            ->getQuery();
+
+        $result = $qb->getSingleResult();
+        $totalSizeInKo = $result['totalSize'];
+        $totalSizeInGo = round($totalSizeInKo / 1024, 2);
+
+        $user = $this->getEntityManager()->getRepository(User::class)->find($userId);
+        $storage=($user)? $user->getStorage(): null;
+
+
+        if ($storage) {
+            $storage->setSizeUse($totalSizeInGo);
+            $this->getEntityManager()->flush();
+        }
     }
     
 

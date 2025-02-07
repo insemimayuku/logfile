@@ -19,6 +19,8 @@ class DashboardController extends AbstractController
     {
         $user = $this->getUser();
 
+        $pourcentage = (($user->getStorage()->getSizeUse()*100)/$user->getStorage()->getSizeAllow());
+
         // Si c'est un admin, redirection vers le dashboard admin
         if ($this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('admin_dashboard');
@@ -30,6 +32,8 @@ class DashboardController extends AbstractController
         return $this->render('dashboard/user_dashboard.html.twig', [
             'user' => $user,
             'files' => $files,
+            'stokage' => $user->getStorage()->getName(),
+            'percent' => $pourcentage
         ]);
     }
 
@@ -37,7 +41,7 @@ class DashboardController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function adminDashboard(EntityManagerInterface $entityManager,FileRepository $fileR): Response
     {
-        $stores= $fileR->getTotalSizeAllStorage();
+        $stores= $fileR->findAll();
         $userCount = $entityManager->getRepository(User::class)->count([]);
         $fileCount = $entityManager->getRepository(File::class)->count([]);
 

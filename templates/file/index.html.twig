@@ -1,33 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FileController!{% endblock %}
+{% block title %}Accueil | Mon Site Symfony
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<header class="hero-section text-center text-white">
+		<div class="container">
+			<h1 class="display-4 fw-bold">Bienvenue sur Mon Site Symfony</h1>
+			<p class="lead">Découvrez nos fonctionnalités et profitez d'une expérience unique.</p>
+			<a href="{{ path('app_register') }}" class="btn btn-success btn-lg">Créer un compte</a>
+		</div>
+	</header>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<section class="container mt-5">
+		<div class="row">
+			<div class="col-md-6">
+				<h2>Découvrez notre plateforme</h2>
+				<p>Ce site vous permet de gérer vos livres et de retrouver vos contenus préférés.</p>
+				<a href="{{ path('profil_page') }}" class="btn btn-primary">Accéder à mon profil</a>
+			</div>
+			<div class="col-md-6">
+				<img src="{{ asset('images/homepage.png') }}" alt="Illustration" class="img-fluid rounded">
+			</div>
+		</div>
+	</section>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/tsiba/Documents/dev/repository/logfile/logfile/src/Controller/FileController.php</code></li>
-        <li>Your template at <code>C:/Users/tsiba/Documents/dev/repository/logfile/logfile/templates/file/index.html.twig</code></li>
-    </ul>
-</div>
-<div>
-    {% if files is empty %}
-        <p>Aucun livre trouvé.</p>
-    {% else %}
-        <ul>
-            {% for file in files %}
-                <li>{{ file.thumdnail }} {{file.size}}</li>
-
-            {% endfor %}
-        </ul>
-    {% endif %}
-
-</div>
+	{% if app.user %}
+		<section class="container mt-5 text-center">
+			<h2>Bonjour
+				{{ app.user.username }}
+				!</h2>
+			<p>Accédez à votre espace personnel et retrouvez vos livres.</p>
+			<a href="{{ path('profil_page') }}" class="btn btn-info">Mon Espace</a>
+		</section>
+	{% else %}
+		<section class="container mt-5 text-center">
+			<h2>Rejoignez-nous dès maintenant !</h2>
+			<p>Inscrivez-vous pour profiter de toutes les fonctionnalités du site.</p>
+			<a href="{{ path('app_register') }}" class="btn btn-warning">S'inscrire</a>
+		</section>
+	{% endif %}
 {% endblock %}
+
