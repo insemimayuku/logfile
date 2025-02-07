@@ -26,7 +26,7 @@ class DashboardController extends AbstractController
             return $this->redirectToRoute('admin_dashboard');
         }
 
-        // Récupérer les fichiers de l'utilisateur
+        // Récupére les fichiers de l'utilisateur
         $files = $fileR->findBy(['id_user'=> $user, 'archiver'=>0]);
 
         return $this->render('dashboard/user_dashboard.html.twig', [
@@ -41,7 +41,6 @@ class DashboardController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function adminDashboard(EntityManagerInterface $entityManager,FileRepository $fileR): Response
     {
-        $stores= $fileR->findAll();
         $userCount = $entityManager->getRepository(User::class)->count([]);
         $fileCount = $entityManager->getRepository(File::class)->count([]);
 
@@ -50,7 +49,6 @@ class DashboardController extends AbstractController
         return $this->render('dashboard/admin_dashboard.html.twig', [
             'userCount' => $userCount,
             'fileCount' => $fileCount,
-            'Stores' => $stores,
         ]);
     }
 }

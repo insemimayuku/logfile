@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class FileController extends AbstractController
 {
-    #[Route('/', name: 'admin_all_files')]
+    #[Route('/file', name: 'admin_all_files')]
     public function index(FileRepository $fileR, Security $security): Response
     {   
 

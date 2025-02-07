@@ -44,7 +44,7 @@
                         <td>{{ file.dateUpload | date("d M Y") }}</td>
 
                         <td>
-                            <a href="{{ path('dowloader', {id: file.id}) }}" class="btn btn-sm btn-success">Télécharger</a>
+                            <a href="{{ path('dowloader', {id: file.id}) }}" class="btn btn-sm btn-secondary">Télécharger</a>
                             <a href="{{ path('fileArchive', {id: file.id}) }}" class="btn btn-sm btn-danger">Archiver</a>
                         </td>
                     </tr>
