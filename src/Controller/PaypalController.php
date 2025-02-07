@@ -19,7 +19,7 @@ class PaypalController extends AbstractController
     #[Route('/pay', name: 'payment_paypal')]
     public function pay()
     {
-        $payment = $this->paypalService->createPayment(50.00, $this->generateUrl('payment_success'), $this->generateUrl('payment_cancel'));
+        $payment = $this->paypalService->createPayment(20.00, $this->generateUrl('payment_success'), $this->generateUrl('payment_cancel'));
 
         if ($payment) {
             foreach ($payment->getLinks() as $link) {

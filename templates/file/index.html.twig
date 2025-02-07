@@ -8,7 +8,7 @@
 		<div class="container">
 			<h1 class="display-4 fw-bold">Bienvenue sur Mon Site Symfony</h1>
 			<p class="lead">Découvrez nos fonctionnalités et profitez d'une expérience unique.</p>
-			<a href="{{ path('app_register') }}" class="btn btn-success btn-lg">Créer un compte</a>
+			<a href="" class="btn btn-success btn-lg">Créer un compte</a>
 		</div>
 	</header>
 
@@ -17,10 +17,10 @@
 			<div class="col-md-6">
 				<h2>Découvrez notre plateforme</h2>
 				<p>Ce site vous permet de gérer vos livres et de retrouver vos contenus préférés.</p>
-				<a href="{{ path('profil_page') }}" class="btn btn-primary">Accéder à mon profil</a>
+				<a href="" class="btn btn-primary">Accéder à mon profil</a>
 			</div>
 			<div class="col-md-6">
-				<img src="{{ asset('images/homepage.png') }}" alt="Illustration" class="img-fluid rounded">
+				<img src="" alt="Illustration" class="img-fluid rounded">
 			</div>
 		</div>
 	</section>
@@ -28,16 +28,16 @@
 	{% if app.user %}
 		<section class="container mt-5 text-center">
 			<h2>Bonjour
-				{{ app.user.username }}
+				{# {{ app.user.username }} #}
 				!</h2>
 			<p>Accédez à votre espace personnel et retrouvez vos livres.</p>
-			<a href="{{ path('profil_page') }}" class="btn btn-info">Mon Espace</a>
+			<a href="" class="btn btn-info">Mon Espace</a>
 		</section>
 	{% else %}
 		<section class="container mt-5 text-center">
 			<h2>Rejoignez-nous dès maintenant !</h2>
 			<p>Inscrivez-vous pour profiter de toutes les fonctionnalités du site.</p>
-			<a href="{{ path('app_register') }}" class="btn btn-warning">S'inscrire</a>
+			<a href="" class="btn btn-warning">S'inscrire</a>
 		</section>
 	{% endif %}
 {% endblock %}
