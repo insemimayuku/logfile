@@ -14,6 +14,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.2",
         "dompdf/dompdf": "^3.1",
+        "paypal/paypal-checkout-sdk": "^1.0",
         "paypal/rest-api-sdk-php": "^1.6",
         "stripe/stripe-php": "^16.3",
         "symfony/asset": "6.4.*",
